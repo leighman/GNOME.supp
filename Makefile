@@ -8,9 +8,9 @@ gtk3_supp_FILES := gtk.supp $(wildcard gtk+/3.x/*.supp)
 gtksourceview_supp_FILES := $(wildcard gtksourceview/*.supp)
 
 BASE_GENERATED_SUPP_FILES = glib.supp gio.supp pango.supp gail.supp gdk.supp gtk3.supp gtksourceview.supp
-base_supp_FILES = glibc.supp fontconfig.supp $(BASE_GENERATED_SUPP_FILES)
+combined_supp_FILES = glibc.supp fontconfig.supp $(BASE_GENERATED_SUPP_FILES)
 
-ALL_GENERATED_SUPP_FILES = $(BASE_GENERATED_SUPP_FILES) gtk.supp base.supp
+ALL_GENERATED_SUPP_FILES = $(BASE_GENERATED_SUPP_FILES) gtk.supp all.supp
 
 .PHONY: all clean
 
@@ -35,5 +35,5 @@ gtk3.supp: $(gtk3_supp_FILES)
 	cat -- $^ | sed '/^#/d' | cat COPYING - >$@
 gtksourceview.supp: $(gtksourceview_supp_FILES)
 	cat -- $^ | sed '/^#/d' | cat COPYING - >$@
-base.supp: Makefile $(base_supp_FILES)
+all.supp: Makefile $(combined_supp_FILES)
 	cat -- $(filter %.supp,$^) | sed '/^#/d' | cat COPYING - >$@
